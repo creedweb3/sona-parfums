@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Sona Sample Order</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Karla:wght@400;500;700&display=swap">
+<style>
+/* Layout: perfumer's ledger — summary strip, filter, then rows of Sona name beside original */
+:root{
+  --bg:#f6f3ef; --surface:#fffdfa; --fg:#2a2220; --muted:#7a6d66; --line:#e4dcd4;
+  --accent:#8a5a2b; --accent-soft:#f1e5d6; --own:#3f6b5c; --own-soft:#e0ece6;
+  --display:"Cormorant Garamond",Georgia,serif; --body:"Karla",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1a1614; --surface:#231e1b; --fg:#efe7df; --muted:#a3958c; --line:#3a312c;
+  --accent:#d9a46c; --accent-soft:#3a2b1e; --own:#8cc4ad; --own-soft:#1f3229; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1a1614; --surface:#231e1b; --fg:#efe7df; --muted:#a3958c; --line:#3a312c;
+  --accent:#d9a46c; --accent-soft:#3a2b1e; --own:#8cc4ad; --own-soft:#1f3229; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:860px;margin:0 auto;padding-block:40px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.05;margin:0;text-wrap:balance}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;color:var(--muted);margin:0 0 6px}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;font-variant-numeric:tabular-nums}
+.stat b{display:block;font-family:var(--display);font-size:1.7rem;font-weight:600;line-height:1}
+.stat span{font-size:.8rem;color:var(--muted)}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input{flex:1 1 220px;min-width:0;font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)}
+input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+button{font:inherit;font-size:.82rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.head,.row{display:grid;grid-template-columns:2.2rem 1fr 1fr;gap:16px;align-items:center}
+.head{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:0 16px 8px}
+.list{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.row{padding:14px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.n{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.85rem}
+.sona{font-family:var(--display);font-size:1.35rem;font-weight:600;line-height:1.15}
+.orig{min-width:0}
+.house{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:4px;margin-bottom:3px}
+.house.own{color:var(--own);background:var(--own-soft)}
+.scent{display:block}
+.empty{padding:24px 16px;color:var(--muted)}
+#list{display:flex;flex-direction:column;gap:28px}
+.group h2{font-family:var(--display);font-weight:600;font-size:1.6rem;margin:0 0 10px;display:flex;align-items:baseline;gap:10px}
+.group h2 span{font-family:var(--body);font-size:.8rem;color:var(--muted)}
+.group .list{border-left:4px solid var(--sea)}
+.s-love{--sea:#c2456a}.s-good{--sea:#4f8a5b}.s-ok{--sea:#b08a3a}.s-hate{--sea:#6b6560}.s-not-rated{--sea:var(--line)}
+.s-summer{--sea:#d9a13b}.s-all-year{--sea:#7a9a6a}.s-winter{--sea:#5b78a8}
+.row{grid-template-columns:2.2rem 1fr 1fr auto}
+.rate{display:flex;gap:4px}
+.rate button{padding:5px 10px;font-size:.78rem}
+.rate .r-love[aria-pressed="true"]{background:#c2456a;border-color:#c2456a;color:#fff}
+.rate .r-good[aria-pressed="true"]{background:#4f8a5b;border-color:#4f8a5b;color:#fff}
+.rate .r-ok[aria-pressed="true"]{background:#b08a3a;border-color:#b08a3a;color:#fff}
+.t-ok{color:#b08a3a}
+.rate .r-hate[aria-pressed="true"]{background:#6b6560;border-color:#6b6560;color:#fff}
+.tally{margin:0;font-variant-numeric:tabular-nums;color:var(--muted)}
+.tally b{color:var(--fg)}
+.tl{display:block}
+.t-love{color:#c2456a}.t-good{color:#4f8a5b}
+@media (max-width:560px){.row{grid-template-columns:2rem 1fr}.rate{grid-column:2}}
+.have{width:2.2rem;height:2.2rem;padding:0;border-radius:50%;font-size:.8rem;font-variant-numeric:tabular-nums;color:var(--muted)}
+.have[aria-pressed="true"]{background:var(--own);border-color:var(--own);color:var(--surface);font-weight:700}
+.is-have .sona,.is-have .orig{opacity:.45}
+.find{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:12px 14px;border:1px dashed var(--line);border-radius:10px}
+.find p{margin:0;flex:1 1 200px}
+.next{border-style:solid;border-color:var(--accent)}
+.why{font-size:.72rem;color:var(--muted);margin-left:4px}
+.find b{color:var(--accent)}
+.item{border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .row{border-top:0}
+.wear{padding:0 16px 12px calc(2.2rem + 32px)}
+.wear summary{cursor:pointer;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);list-style-position:outside}
+.wear summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wsum{font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px;color:var(--fg)}
+.wbody{display:flex;flex-direction:column;gap:10px;margin-top:12px;padding:14px;border-radius:10px;background:var(--bg)}
+.wf{display:grid;grid-template-columns:7.5rem 1fr;gap:10px;align-items:center}
+.wl{font-size:.78rem;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:4px}
+.opts button{padding:4px 10px;font-size:.78rem}
+.opts button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.opts .w-verdict.v-love[aria-pressed="true"]{background:#c2456a;border-color:#c2456a;color:#fff}
+.opts .w-verdict.v-good[aria-pressed="true"]{background:#4f8a5b;border-color:#4f8a5b;color:#fff}
+.opts .w-verdict.v-ok[aria-pressed="true"]{background:#b08a3a;border-color:#b08a3a;color:#fff}
+.opts .w-verdict.v-hate[aria-pressed="true"]{background:#6b6560;border-color:#6b6560;color:#fff}
+.wnote textarea{font:inherit;font-size:.85rem;width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);resize:vertical}
+@media (max-width:560px){.wear{padding-left:16px}.wf{grid-template-columns:1fr;gap:4px}}
+.vibe{display:block;font-family:var(--body);font-size:.8rem;font-weight:400;color:var(--muted);margin-top:2px}
+footer{font-size:.8rem;color:var(--muted)}
+footer a{color:var(--accent)}
+@media (max-width:560px){
+  .head{display:none}
+  .row{grid-template-columns:2rem 1fr;gap:4px 12px}
+  .orig{grid-column:2}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Sona Parfums · 3ml samples</p>
+    <h1>Your 27 samples and the scents they copy</h1>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b>27</b><span>samples</span></div>
+    <div class="stat"><b>£60.00</b><span>for the 25 ordered, £2.40 each</span></div>
+    <div class="stat"><b>19</b><span>original houses</span></div>
+    <div class="stat"><b>2</b><span>Sona originals</span></div>
+  </div>
+
+  <div class="tools"><p class="tally" id="tally"></p><button id="copy">Copy my ratings</button></div>
+  <textarea id="copyText" readonly hidden aria-label="Your ratings" style="width:100%;min-height:8em;font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px"></textarea>
+
+  <div class="tools">
+    <input id="q" type="search" placeholder="Search a Sona name, house or original" aria-label="Search">
+    <div class="chips" id="chips"></div>
+  </div>
+  <div class="find next">
+    <span class="wl">Wear-test next</span>
+    <div id="nextList" class="chips"></div>
+  </div>
+  <div class="find">
+    <span class="wl">Find a missing bottle</span>
+    <p id="findStatus"></p>
+    <span class="chips"><button id="onlyMissing" aria-pressed="false">Show unmarked only</button><button id="clearHave">Clear marks</button></span>
+  </div>
+  <div class="chips" id="groupBy"><span class="wl" style="align-self:center;margin-right:4px">Group by</span></div>
+
+  <div>
+    <div id="list"></div>
+  </div>
+
+  <footer>Inspirations come from each product listing on <a href="https://www.sonaparfums.com/collections/men" target="_blank" rel="noopener">sonaparfums.com</a>, checked 11 Nov 2026. Seasons are a general guide based on each original's main notes.</footer>
+</div>
+
+<script>
+const items=[
+["Le Vetive","Creed","Original Vetiver","Summer","green vetiver, citrus"],
+["Odyssey","Maison Crivelli","Hibiscus Mahajad","Summer","bright floral, fruity"],
+["National Treasure","Ex Nihilo","The Hedonist Extrait","Winter","boozy vanilla"],
+["Poseidon","Ex Nihilo","Blue Talisman Extrait","Summer","fresh fruity musk"],
+["Stardust","Sona original","Exclusive to Sona","Winter","oud, vanilla, amber"],
+["Starsona","Sona original","Exclusive to Sona","Winter","leather, tobacco, honey"],
+["Onyx","Mancera","Tonka Cola","Winter","sweet tonka, cola"],
+["Il Duce","Ex Nihilo","Chandigarh Express","All year","spicy citrus, woods"],
+["Dreamcatcher","Louis Vuitton","Attrape-Rêves","All year","lychee, cocoa, patchouli"],
+["Crimson","Clive Christian","X for Men","Winter","spicy, warm woods"],
+["Cafe Creme","Giardini di Toscana","Bianco Latte","Winter","milky caramel gourmand"],
+["Destiny","Amouage","Decision","All year","fruity, woody"],
+["Santal Privé","Le Labo","Santal 33","All year","creamy sandalwood"],
+["Crystal","Matière Première","Crystal Saffron","All year","clean saffron musk"],
+["Gemini","Orto Parisi","Bergamask","Summer","bergamot, citrus"],
+["Nocturnal","Guerlain","Herbes Troublantes","Summer","green herbs, mint"],
+["Midnight Ember","Guerlain","Spiritueuse Double Vanille","Winter","boozy vanilla, incense"],
+["Celestial","Maison Francis Kurkdjian","Grand Soir","Winter","rich amber"],
+["Pangea","Memo Paris","African Leather","Winter","spicy leather"],
+["Electric Resin","Ex Nihilo","Scarlet Sands","Winter","amber, resins"],
+["Overdrive","Penhaligon's","The Blazing Mr Sam","Winter","spicy tobacco"],
+["Cassis","Fugazzi","Pomegranoudh","Winter","pomegranate, oud"],
+["Temptation","Born to Stand Out","Drunk Lovers","Winter","boozy cherry"],
+["Ghost","Byredo","Mojave Ghost Absolu","All year","soft woody musk"],
+["Bois Tropique","Byredo","Bal d'Afrique Absolu","Summer","citrus, vetiver, musk"],
+["Sovereign","Argos","Triumph of Bacchus","Winter","boozy, amber, labdanum"],
+["Rogue Angel","Ex Nihilo","Demon Dancer","Winter","red fruits, spice, amber"]
+].map((r,i)=>({n:i+1,sona:r[0],house:r[1],scent:r[2],season:r[3],vibe:r[4]}));
+const SEASONS=["Summer","All year","Winter"];
+
+const counts={};items.forEach(i=>counts[i.season]=(counts[i.season]||0)+1);
+let season="All",groupBy="season";
+try{groupBy=localStorage.getItem("sonaGroupBy")||"season"}catch(e){}
+const gb=document.getElementById("groupBy");
+[["season","Season"],["sniff","Sniff rating"],["wear","Wear rating"]].forEach(([k,l])=>{
+  const b=document.createElement("button");b.textContent=l;b.setAttribute("aria-pressed",k===groupBy);
+  b.onclick=()=>{groupBy=k;try{localStorage.setItem("sonaGroupBy",k)}catch(e){}[...gb.querySelectorAll("button")].forEach(c=>c.setAttribute("aria-pressed",c===b));render()};
+  gb.appendChild(b);
+});
+const chips=document.getElementById("chips"),list=document.getElementById("list"),q=document.getElementById("q");
+["All",...SEASONS].forEach(h=>{
+  const b=document.createElement("button");
+  b.textContent=h==="All"?`All ${items.length}`:`${h} (${counts[h]})`;
+  b.setAttribute("aria-pressed",h===season);
+  b.onclick=()=>{season=h;[...chips.children].forEach(c=>c.setAttribute("aria-pressed",c===b));render()};
+  chips.appendChild(b);
+});
+function norm(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+const RATINGS=["Love","Good","OK","Hate"];
+let ratings={};try{ratings=JSON.parse(localStorage.getItem("sonaRatings")||"{}")}catch(e){}
+function saveRatings(){try{localStorage.setItem("sonaRatings",JSON.stringify(ratings))}catch(e){}}
+function rater(i){
+  const isWear=groupBy==="wear",cur=isWear?(wear[i.sona]||{}).verdict:ratings[i.sona];
+  return `<span class="rate" role="group" aria-label="${isWear?"Wear":"Sniff"} rating for ${esc(i.sona)}">${RATINGS.map(r=>`<button class="r-${r.toLowerCase()}" data-sona="${esc(i.sona)}" ${isWear?`data-wear="verdict" data-v="${r}"`:`data-r="${r}"`} aria-pressed="${cur===r}">${r}</button>`).join("")}</span>`}
+const WEAR_FIELDS=[
+  ["verdict","Wear verdict",["Love","Good","OK","Hate"]],
+  ["longevity","Longevity",["Under 2h","2–4h","4–6h","6–8h","8h+"]],
+  ["projection","Projection",["Skin scent","Soft","Moderate","Loud"]],
+  ["daily","Daily wear?",["Yes","Maybe","No"]]
+];
+let wear={};try{wear=JSON.parse(localStorage.getItem("sonaWear")||"{}")}catch(e){}
+function saveWear(){try{localStorage.setItem("sonaWear",JSON.stringify(wear))}catch(e){}}
+const openWear=new Set();
+function wearSummary(w){
+  if(!w||!Object.values(w).some(Boolean))return "not worn yet";
+  return [w.verdict,w.longevity,w.projection,w.daily&&("daily: "+w.daily)].filter(Boolean).join(" · ")||"notes only";
+}
+function wearPanel(i){
+  const w=wear[i.sona]||{},s=esc(i.sona);
+  const fields=WEAR_FIELDS.map(([k,label,opts])=>`<div class="wf"><span class="wl">${label}</span><span class="opts">${opts.map(o=>`<button class="w-${k} v-${o.toLowerCase().replace(/[^a-z0-9]/g,"")}" data-wear="${k}" data-sona="${s}" data-v="${esc(o)}" aria-pressed="${w[k]===o}">${esc(o)}</button>`).join("")}</span></div>`).join("");
+  return `<details class="wear" data-sona="${s}"${openWear.has(i.sona)?" open":""}><summary>Wear test <span class="wsum">${esc(wearSummary(w))}</span></summary><div class="wbody">${fields}<label class="wf wnote"><span class="wl">Notes</span><textarea id="note-${i.n}" data-wnote="1" data-sona="${s}" rows="2" placeholder="How it dried down, where you wore it, would you buy 50ml?">${esc(w.notes||"")}</textarea></label><div><button class="wclear" data-wclear="${s}">Clear wear test</button></div></div></details>`;
+}
+function row(i){return `<div class="item">`+rowInner(i)+wearPanel(i)+`</div>`}
+let have={};try{have=JSON.parse(localStorage.getItem("sonaHave")||"{}")}catch(e){}
+function saveHave(){try{localStorage.setItem("sonaHave",JSON.stringify(have))}catch(e){}}
+let onlyMissing=false;
+function rowInner(i){return `<div class="row${have[i.sona]?" is-have":""}"><button class="have" data-have="${esc(i.sona)}" aria-pressed="${!!have[i.sona]}" aria-label="Mark ${esc(i.sona)} as found">${have[i.sona]?"✓":String(i.n).padStart(2,"0")}</button><span class="sona">${esc(i.sona)}<span class="vibe">${esc(i.vibe)}</span></span><span class="orig"><span class="house${i.house==="Sona original"?" own":""}">${esc(i.house)}</span><span class="scent">${esc(i.scent)}</span></span>${rater(i)}</div>`}
+function nowSeasons(){const m=new Date().getMonth();return m>=4&&m<=8?["Summer","All year"]:["Winter","All year"]}
+function renderNext(){
+  const sniffScore={Love:4,Good:3,OK:1,Hate:-5},fit=nowSeasons();
+  const pool=items.filter(i=>!(wear[i.sona]&&wear[i.sona].verdict)&&ratings[i.sona]!=="Hate");
+  const ranked=pool.map(i=>({i,score:(sniffScore[ratings[i.sona]]??0.5)+(fit.includes(i.season)?2:0)})).sort((a,b)=>b.score-a.score).slice(0,3);
+  const el=document.getElementById("nextList");
+  if(!ranked.length){el.innerHTML=`<span class="wl">Everything you liked has a wear test. Nice work.</span>`;return}
+  el.innerHTML=ranked.map(({i})=>`<button data-goto="${esc(i.sona)}">${esc(i.sona)} <span class="why">${esc([ratings[i.sona]?ratings[i.sona]+" sniff":"not sniffed",fit.includes(i.season)?"in season":i.season].join(" · "))}</span></button>`).join("");
+}
+document.getElementById("nextList").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-goto]");if(!b)return;
+  const s=b.dataset.goto;openWear.add(s);q.value="";onlyMissing=false;document.getElementById("onlyMissing").setAttribute("aria-pressed","false");
+  season="All";[...chips.children].forEach((c,idx)=>c.setAttribute("aria-pressed",idx===0));
+  render();
+  const d=[...document.querySelectorAll("details.wear")].find(x=>x.dataset.sona===s);
+  if(d)d.closest(".item").scrollIntoView({behavior:"smooth",block:"center"});
+});
+function tally(){
+  renderNext();
+  const c={Love:0,Good:0,OK:0,Hate:0};Object.values(ratings).forEach(r=>c[r]!==undefined&&c[r]++);
+  const done=c.Love+c.Good+c.OK+c.Hate;
+  const w={Love:0,Good:0,OK:0,Hate:0};Object.values(wear).forEach(x=>x&&w[x.verdict]!==undefined&&w[x.verdict]++);
+  const wdone=w.Love+w.Good+w.OK+w.Hate;
+  const line=(label,n,o)=>`<span class="tl"><b>${n}/${items.length}</b> ${label} · <span class="t-love">${o.Love} Love</span> · <span class="t-good">${o.Good} Good</span> · <span class="t-ok">${o.OK} OK</span> · <span class="t-hate">${o.Hate} Hate</span></span>`;
+  document.getElementById("tally").innerHTML=line("sniffed",done,c)+line("wear-tested",wdone,w);
+}
+const listEl=document.getElementById("list");
+listEl.addEventListener("toggle",e=>{const d=e.target;if(d.classList&&d.classList.contains("wear")){d.open?openWear.add(d.dataset.sona):openWear.delete(d.dataset.sona)}},true);
+listEl.addEventListener("input",e=>{
+  const t=e.target;if(!t.dataset||!t.dataset.wnote)return;
+  wear[t.dataset.sona]={...(wear[t.dataset.sona]||{}),notes:t.value};saveWear();
+});
+listEl.addEventListener("click",e=>{
+  const cb=e.target.closest("button[data-wclear]");
+  if(cb){
+    if(!cb.dataset.armed){cb.dataset.armed=1;cb.textContent="Tap again to clear";setTimeout(()=>{if(cb.isConnected){delete cb.dataset.armed;cb.textContent="Clear wear test"}},3000);return}
+    delete wear[cb.dataset.wclear];saveWear();render();return;
+  }
+  const hb=e.target.closest("button[data-have]");
+  if(hb){const s=hb.dataset.have;if(have[s])delete have[s];else have[s]=1;saveHave();render();return}
+  const wb=e.target.closest("button[data-wear]");
+  if(wb){
+    const s=wb.dataset.sona,k=wb.dataset.wear,v=wb.dataset.v,cur=wear[s]||{};
+    wear[s]={...cur,[k]:cur[k]===v?"":v};saveWear();
+    if(groupBy==="wear"&&k==="verdict"){render();return}
+    const it=wb.closest(".item");
+    it.querySelectorAll(`button[data-wear="${k}"]`).forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===wear[s][k]));
+    it.querySelector(".wsum").textContent=wearSummary(wear[s]);tally();
+    return;
+  }
+  const b=e.target.closest(".rate button");if(!b)return;
+  const s=b.dataset.sona,r=b.dataset.r;
+  if(ratings[s]===r)delete ratings[s];else ratings[s]=r;
+  saveRatings();render();
+});
+function render(){
+  const t=norm(q.value.trim());
+  const missing=items.filter(i=>!have[i.sona]),found=items.length-missing.length;
+  document.getElementById("findStatus").innerHTML=found===0?"Tap a sample's number to mark the bottles you still have.":missing.length===1?`Your missing bottle is <b>${esc(missing[0].sona)}</b> (${esc(missing[0].house)} ${esc(missing[0].scent)}).`:`${found} marked · <b>${missing.length}</b> not marked yet`;
+  const match=i=>(!onlyMissing||!have[i.sona])&&(season==="All"||i.season===season)&&(!t||norm(i.sona+" "+i.house+" "+i.scent+" "+i.vibe).includes(t));
+  const RG=["Love","Good","OK","Hate","Not rated"];
+  const keyOf={season:i=>i.season,sniff:i=>ratings[i.sona]||"Not rated",wear:i=>(wear[i.sona]&&wear[i.sona].verdict)||"Not rated"}[groupBy];
+  const groups=groupBy==="season"?SEASONS:RG;
+  const html=groups.map(s=>{const rows=items.filter(i=>keyOf(i)===s&&match(i));return rows.length?`<section class="group s-${s.replace(" ","-").toLowerCase()}"><h2>${s}<span>${rows.length}</span></h2><div class="list">${rows.map(row).join("")}</div></section>`:""}).join("");
+  const hiddenMarked=onlyMissing&&t?items.filter(i=>have[i.sona]&&norm(i.sona+" "+i.house+" "+i.scent+" "+i.vibe).includes(t)).length:0;
+  list.innerHTML=html||`<div class="empty">No samples match “${esc(q.value)}”.${hiddenMarked?` ${hiddenMarked} marked bottle${hiddenMarked>1?"s match":" matches"}, but “Show unmarked only” is hiding ${hiddenMarked>1?"them":"it"}.`:""}</div>`;
+  tally();
+}
+document.getElementById("onlyMissing").addEventListener("click",e=>{onlyMissing=!onlyMissing;e.currentTarget.setAttribute("aria-pressed",onlyMissing);render()});
+const clr=document.getElementById("clearHave");
+clr.addEventListener("click",()=>{if(clr.dataset.armed){have={};saveHave();delete clr.dataset.armed;clr.textContent="Clear marks";render()}else{clr.dataset.armed=1;clr.textContent="Tap again to clear";setTimeout(()=>{delete clr.dataset.armed;clr.textContent="Clear marks"},3000)}});
+q.addEventListener("input",render);render();
+document.getElementById("copy").addEventListener("click",e=>{
+  const txt=["Love","Good","OK","Hate"].map(r=>r+": "+(items.filter(i=>ratings[i.sona]===r).map(i=>i.sona).join(", ")||"none")).join("\n")+"\nNot rated: "+(items.filter(i=>!ratings[i.sona]).map(i=>i.sona).join(", ")||"none")
+    +"\n\nWEAR TESTS\n"+(items.filter(i=>wear[i.sona]&&Object.values(wear[i.sona]).some(Boolean)).map(i=>{const w=wear[i.sona];return `${i.sona}: ${wearSummary(w)}${w.notes?" · notes: "+w.notes:""}`}).join("\n")||"none yet");
+  const ta=document.getElementById("copyText");ta.value=txt;
+  const btn=e.currentTarget;
+  navigator.clipboard.writeText(txt).then(()=>{btn.textContent="Copied";setTimeout(()=>btn.textContent="Copy my ratings",1500)}).catch(()=>{ta.hidden=false;ta.select()});
+});
+</script>
+
+</body>
+</html>
