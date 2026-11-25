@@ -120,7 +120,7 @@ footer a{color:var(--accent)}
   <div id="restoreBox" class="find" hidden>
     <span class="wl">Paste a backup from your other copy of this page, then tap Restore. It replaces the ratings, wear tests and marks here.</span>
     <textarea id="restoreText" rows="3" aria-label="Backup to restore" style="width:100%;font:inherit;font-size:.8rem;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px"></textarea>
-    <span class="chips"><button id="restoreApply">Restore</button><span id="restoreMsg" class="wl"></span></span>
+    <span class="chips"><button id="restoreApply">Restore</button><button id="restoreClose">Close</button><span id="restoreMsg" class="wl"></span></span>
   </div>
   <textarea id="copyText" readonly hidden aria-label="Your ratings" style="width:100%;min-height:8em;font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px"></textarea>
 
@@ -302,6 +302,8 @@ document.getElementById("backup").addEventListener("click",e=>{
   const ta=document.getElementById("copyText"),btn=e.currentTarget;ta.value=data;
   navigator.clipboard.writeText(data).then(()=>{btn.textContent="Backup copied";setTimeout(()=>btn.textContent="Back up data",1500)}).catch(()=>{ta.hidden=false;ta.select()});
 });
+function closeRestore(){document.getElementById("restoreBox").hidden=true;document.getElementById("restoreMsg").textContent=""}
+document.getElementById("restoreClose").addEventListener("click",closeRestore);
 document.getElementById("restoreOpen").addEventListener("click",()=>{const b=document.getElementById("restoreBox");b.hidden=!b.hidden});
 document.getElementById("restoreApply").addEventListener("click",()=>{
   const msg=document.getElementById("restoreMsg");
@@ -311,6 +313,8 @@ document.getElementById("restoreApply").addEventListener("click",()=>{
     ratings=d.ratings||{};wear=d.wear||{};have=d.have||{};
     saveRatings();saveWear();saveHave();render();
     msg.textContent=`Restored ${Object.keys(ratings).length} sniff ratings and ${Object.keys(wear).length} wear tests.`;
+    document.getElementById("restoreText").value="";
+    setTimeout(closeRestore,2500);
   }catch(err){msg.textContent="That isn't a backup from this page. Tap Back up data on the other copy and paste again."}
 });
 q.addEventListener("input",render);render();
