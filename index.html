@@ -116,7 +116,12 @@ footer a{color:var(--accent)}
     <div class="stat"><b>2</b><span>Sona originals</span></div>
   </div>
 
-  <div class="tools"><p class="tally" id="tally"></p><button id="copy">Copy my ratings</button></div>
+  <div class="tools"><p class="tally" id="tally"></p><span class="chips"><button id="copy">Copy my ratings</button><button id="backup">Back up data</button><button id="restoreOpen">Restore data</button></span></div>
+  <div id="restoreBox" class="find" hidden>
+    <span class="wl">Paste a backup from your other copy of this page, then tap Restore. It replaces the ratings, wear tests and marks here.</span>
+    <textarea id="restoreText" rows="3" aria-label="Backup to restore" style="width:100%;font:inherit;font-size:.8rem;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px"></textarea>
+    <span class="chips"><button id="restoreApply">Restore</button><span id="restoreMsg" class="wl"></span></span>
+  </div>
   <textarea id="copyText" readonly hidden aria-label="Your ratings" style="width:100%;min-height:8em;font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px"></textarea>
 
   <div class="tools">
@@ -292,6 +297,22 @@ function render(){
 document.getElementById("onlyMissing").addEventListener("click",e=>{onlyMissing=!onlyMissing;e.currentTarget.setAttribute("aria-pressed",onlyMissing);render()});
 const clr=document.getElementById("clearHave");
 clr.addEventListener("click",()=>{if(clr.dataset.armed){have={};saveHave();delete clr.dataset.armed;clr.textContent="Clear marks";render()}else{clr.dataset.armed=1;clr.textContent="Tap again to clear";setTimeout(()=>{delete clr.dataset.armed;clr.textContent="Clear marks"},3000)}});
+document.getElementById("backup").addEventListener("click",e=>{
+  const data=JSON.stringify({sona:1,ratings,wear,have});
+  const ta=document.getElementById("copyText"),btn=e.currentTarget;ta.value=data;
+  navigator.clipboard.writeText(data).then(()=>{btn.textContent="Backup copied";setTimeout(()=>btn.textContent="Back up data",1500)}).catch(()=>{ta.hidden=false;ta.select()});
+});
+document.getElementById("restoreOpen").addEventListener("click",()=>{const b=document.getElementById("restoreBox");b.hidden=!b.hidden});
+document.getElementById("restoreApply").addEventListener("click",()=>{
+  const msg=document.getElementById("restoreMsg");
+  try{
+    const d=JSON.parse(document.getElementById("restoreText").value.trim());
+    if(!d||d.sona!==1)throw 0;
+    ratings=d.ratings||{};wear=d.wear||{};have=d.have||{};
+    saveRatings();saveWear();saveHave();render();
+    msg.textContent=`Restored ${Object.keys(ratings).length} sniff ratings and ${Object.keys(wear).length} wear tests.`;
+  }catch(err){msg.textContent="That isn't a backup from this page. Tap Back up data on the other copy and paste again."}
+});
 q.addEventListener("input",render);render();
 document.getElementById("copy").addEventListener("click",e=>{
   const txt=["Love","Good","OK","Hate"].map(r=>r+": "+(items.filter(i=>ratings[i.sona]===r).map(i=>i.sona).join(", ")||"none")).join("\n")+"\nNot rated: "+(items.filter(i=>!ratings[i.sona]).map(i=>i.sona).join(", ")||"none")
